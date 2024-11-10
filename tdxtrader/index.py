@@ -71,7 +71,7 @@ def read_file(file_path):
             if not first_line:  # 文件为空
                 return pd.DataFrame(columns=COLUMNS)
         
-        df = pd.read_csv(file_path, sep='\s+', header=None, encoding='gb2312', on_bad_lines=handle_bad_lines, engine='python', dtype={0: str})
+        df = pd.read_csv(file_path, sep=r'\s+', header=None, encoding='gb2312', on_bad_lines=handle_bad_lines, engine='python', dtype={0: str})
         df.columns = COLUMNS
         return df
     except Exception as e:
@@ -188,5 +188,5 @@ if __name__ == '__main__':
         buy_sign=buy_sign,
         sell_sign=sell_sign,
         buy_event=buy_event,
-        buy_event=sell_event
+        sell_event=sell_event
     )
