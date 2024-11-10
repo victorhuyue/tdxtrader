@@ -106,9 +106,6 @@ def create_trader(account_id, mini_qmt_path):
     # 注册回调类
     xt_trader.register_callback(MyXtQuantTraderCallback())
 
-    res = xt_trader.query_stock_position(account, '600519.SH')
-    print(res.volume, 'res')
-
     return xt_trader, account
 
 def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1):
