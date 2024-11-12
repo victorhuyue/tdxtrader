@@ -1,5 +1,28 @@
 # tdxtrader
+
 通达信预警信号程序化交易
+
+> 声明：本项目仅用于学习和研究，不保证交易收益，不作为投资建议，风险自负，请充分使用QMT模拟盘测试。
+
+## 欢迎加入知识星球
+
+![知识星球](./qrcode.png)
+
+## 安装
+
+```shell
+pip install tdxtrader
+```
+
+## 预警指标设置
+
+设置两个指标，一个作为买入信号，一个作为卖出信号
+
+![预警指标](./cut2.png)
+
+## 预警文件设置
+
+![预警文件](./cut1.png)
 
 ## demo
 
@@ -17,16 +40,16 @@ def buy_event(row, xt_trader):
     '''买入数量'''
     return { 
       'size': 100, 
-      'price': -1, 
-      'type': '市价'
+      'price': -1, # 如果是限价，则设置价格
+      'type': '市价' # 市价，限价
     }
 
 def sell_event(row, position, xt_trader):
     '''卖出数量'''
     return { 
-      'size': position.can_use_volume, 
-      'price': -1, 
-      'type': '市价'
+      'size': position.can_use_volume, # 卖全仓
+      'price': -1,  # 如果是限价，则设置价格
+      'type': '市价' # 市价，限价
     }
 
 
@@ -41,3 +64,4 @@ tdxtrader.start(
     buy_event=sell_event
 )
 ```
+

@@ -112,8 +112,6 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
 
     xt_trader, account = create_trader(account_id, mini_qmt_path)
 
-    print(xt_trader, account)
-
     previous_df = None
 
     # 启动前清空文件内容
@@ -161,32 +159,3 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
             previous_df = current_df
         
         time.sleep(interval)
-
-if __name__ == '__main__':
-    # 参数
-    account_id = '55003152' # 账号ID
-    mini_qmt_path = r'D:\国金QMT交易端模拟\userdata_mini' # mini_qmt 路径
-    file_path = r'D:\new_tdx\sign.txt' # 预警文件路径
-    interval = 1 # 轮询时间(秒)
-    buy_sign = 'KDJ买入条件选股' # 买入信号
-    sell_sign = 'KDJ卖出条件选股' # 卖出信号
-
-    def buy_event(row, xt_trader):
-        '''买入数量'''
-        return 100
-    
-    def sell_event(row, position, xt_trader):
-        '''卖出数量'''
-        return 100 # position.can_use_volume
-
-
-    start(
-        account_id=account_id,
-        mini_qmt_path=mini_qmt_path,
-        file_path=file_path,
-        interval=interval,
-        buy_sign=buy_sign,
-        sell_sign=sell_sign,
-        buy_event=buy_event,
-        sell_event=sell_event
-    )
