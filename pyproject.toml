@@ -4,7 +4,8 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "tdxtrader"
-version = "0.1.1"
+version = "0.1.2"
+description = "通达信预警信号程序化交易"
 authors = [{name = "myc", email = "mayuanchi1029@gmail.com"}]
 readme = "README.md"
 license = {file = "LICENSE"}
