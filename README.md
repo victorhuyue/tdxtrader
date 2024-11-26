@@ -70,6 +70,8 @@ tdxtrader.start(
 
 ### 限价委托（获取预警价格）
 
+stock对象中包含了当前股票的详细信息，可以通过price属性获取预警时的价格
+
 ```python
 def buy_event(stock, xt_trader):
     '''买入数量'''
