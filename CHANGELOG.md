@@ -1,7 +1,15 @@
 # CHANGELOG
 
 
+## v0.1.3 (2024-11-26)
+
+
 ## v0.1.2 (2024-11-26)
+
+### Bug Fixes
+
+- 增加描述
+  ([`2129ef0`](https://github.com/zsrl/tdxtrader/commit/2129ef061731a9e281398427f6d0a92ea5efc920))
 
 
 ## v0.1.1 (2024-11-26)
