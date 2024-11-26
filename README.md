@@ -36,15 +36,15 @@ interval = 1 # 轮询时间(秒)
 buy_sign = 'KDJ买入条件选股' # 买入信号
 sell_sign = 'KDJ卖出条件选股' # 卖出信号
 
-def buy_event(row, xt_trader):
+def buy_event(stock, xt_trader):
     '''买入数量'''
     return { 
       'size': 100, 
       'price': -1, # 如果是限价，则设置价格
-      'type': '市价' # 市价，限价
+      'type': '市价', # 市价，限价
     }
 
-def sell_event(row, position, xt_trader):
+def sell_event(stock, position, xt_trader):
     '''卖出数量'''
     return { 
       'size': position.can_use_volume, # 卖全仓
@@ -61,7 +61,27 @@ tdxtrader.start(
     buy_sign=buy_sign,
     sell_sign=sell_sign,
     buy_event=buy_event,
-    buy_event=sell_event
+    sell_event=sell_event
 )
+```
+
+### 限价委托（获取预警价格）
+
+```python
+def buy_event(stock, xt_trader):
+    '''买入数量'''
+    return { 
+      'size': 100, 
+      'price': stock.get('price'), # 如果是限价，则设置价格
+      'type': '限价', # 市价，限价
+    }
+
+def sell_event(stock, position, xt_trader):
+    '''卖出数量'''
+    return { 
+      'size': position.can_use_volume, # 卖全仓
+      'price': stock.get('price'),  # 如果是限价，则设置价格
+      'type': '限价' # 市价，限价
+    }
 ```
 
