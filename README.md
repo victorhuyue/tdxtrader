@@ -1,3 +1,6 @@
+[![PyPI version](https://badge.fury.io/py/tdxtrader.svg)](https://badge.fury.io/py/tdxtrader)
+[![Downloads](https://static.pepy.tech/badge/tdxtrader/month)](https://pepy.tech/project/tdxtrader)
+
 # tdxtrader
 
 通达信预警信号程序化交易
