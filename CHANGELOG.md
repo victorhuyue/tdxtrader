@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.1 (2024-11-26)
+
+### Performance Improvements
+
+- 更新文档
+  ([`73e6206`](https://github.com/zsrl/tdxtrader/commit/73e62065e1423fe173d5d731069a160f7c9be9a8))
+
+
 ## v0.1.0 (2024-11-26)
 
 ### Bug Fixes
