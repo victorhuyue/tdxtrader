@@ -2,6 +2,7 @@ import pandas as pd
 from xtquant.xttrader import XtQuantTrader, XtQuantTraderCallback
 from xtquant.xttype import StockAccount
 from xtquant import xtconstant
+from datetime import datetime
 import time
 import random
 
@@ -23,6 +24,17 @@ def add_stock_suffix(stock_code):
     
     return f"{stock_code}.SH"
 
+def timestamp_to_datetime_string(timestamp):
+    """
+    将时间戳转换为时间字符串。
+
+    :param timestamp: 时间戳（秒级）
+    :return: 格式化的时间字符串 'YYYY-MM-DD HH:MM:SS'
+    """
+    dt_object = datetime.fromtimestamp(timestamp)
+    time_string = dt_object.strftime('%Y-%m-%d %H:%M:%S')
+    return time_string
+
 class MyXtQuantTraderCallback(XtQuantTraderCallback):
     def on_disconnected(self):
         """
@@ -36,14 +48,14 @@ class MyXtQuantTraderCallback(XtQuantTraderCallback):
         :param order: XtOrder对象
         :return:
         """
-        print(f"【委托】 订单编号:{order.order_id} 代码:{order.stock_code} 委托价格:{order.price} 委托数量:{order.order_volume} 委托时间:{order.order_time}")
+        print(f"【委托】 订单编号:{order.order_id} 代码:{order.stock_code} 委托价格:{order.price} 委托数量:{order.order_volume} 委托时间:{timestamp_to_datetime_string(order.order_time)}")
     def on_stock_trade(self, trade):
         """
         成交信息推送
         :param trade: XtTrade对象
         :return:
         """
-        print(f"【成交】 成交编号:{trade.order_id} 代码:{trade.stock_code} 成交价格:{trade.traded_price} 成交数量:{trade.traded_volume} 成交时间:{trade.traded_time}")
+        print(f"【成交】 成交编号:{trade.order_id} 代码:{trade.stock_code} 成交价格:{trade.traded_price} 成交数量:{trade.traded_volume} 成交时间:{timestamp_to_datetime_string(trade.traded_time)}")
 
 # 自定义函数处理格式不正确的行
 def handle_bad_lines(bad_line):
