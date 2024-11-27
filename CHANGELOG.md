@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.6 (2024-11-27)
+
+### Bug Fixes
+
+- 修改没有持仓时卖出报错
+  ([`174e690`](https://github.com/zsrl/tdxtrader/commit/174e69010a9b3c8912714452e431945ff819b13f))
+
+
 ## v0.1.5 (2024-11-27)
 
 ### Performance Improvements
