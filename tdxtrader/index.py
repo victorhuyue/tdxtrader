@@ -157,8 +157,8 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
                             )
                         elif row['sign'] == sell_sign:
                             position = xt_trader.query_stock_position(account, stock_code)
-                            sell_paload = sell_event(row, position, xt_trader)
                             if position is not None:
+                                sell_paload = sell_event(row, position, xt_trader)
                                 xt_trader.order_stock_async(
                                     account=account, 
                                     stock_code=stock_code, 
@@ -167,6 +167,8 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
                                     price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
                                     price=sell_paload.get('price') or -1,
                                 )
+                            else:
+                                print(f"【卖出信号】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
                     
             previous_df = current_df
         
