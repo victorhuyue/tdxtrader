@@ -35,6 +35,12 @@ def timestamp_to_datetime_string(timestamp):
     time_string = dt_object.strftime('%Y-%m-%d %H:%M:%S')
     return time_string
 
+def parse_order_type(order_type):
+    if order_type == xtconstant.STOCK_BUY:
+        return "买入"
+    elif order_type == xtconstant.STOCK_SELL:
+        return "卖出"
+
 class MyXtQuantTraderCallback(XtQuantTraderCallback):
     def on_disconnected(self):
         """
@@ -48,14 +54,14 @@ class MyXtQuantTraderCallback(XtQuantTraderCallback):
         :param order: XtOrder对象
         :return:
         """
-        print(f"【委托】 订单编号:{order.order_id} 代码:{order.stock_code} 委托价格:{order.price} 委托数量:{order.order_volume} 委托时间:{timestamp_to_datetime_string(order.order_time)}")
+        print(f"【已委托】类型: {parse_order_type(order.order_type)} 订单编号:{order.order_id} 代码:{order.stock_code} 委托价格:{order.price} 委托数量:{order.order_volume} 委托时间:{timestamp_to_datetime_string(order.order_time)}")
     def on_stock_trade(self, trade):
         """
         成交信息推送
         :param trade: XtTrade对象
         :return:
         """
-        print(f"【成交】 成交编号:{trade.order_id} 代码:{trade.stock_code} 成交价格:{trade.traded_price} 成交数量:{trade.traded_volume} 成交时间:{timestamp_to_datetime_string(trade.traded_time)}")
+        print(f"【已成交】类型: {parse_order_type(trade.order_type)} 成交编号:{trade.order_id} 代码:{trade.stock_code} 成交价格:{trade.traded_price} 成交数量:{trade.traded_volume} 成交时间:{timestamp_to_datetime_string(trade.traded_time)}")
 
 # 自定义函数处理格式不正确的行
 def handle_bad_lines(bad_line):
@@ -172,6 +178,8 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
                                     print(f"【卖出信号】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
                         
                 previous_df = current_df
+
+            orders = xt_trader.query_stock_orders(account, cancelable_only = False)
 
         except Exception as e:
             print(f"【发生错误】{e}")
