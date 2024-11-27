@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.1.5 (2024-11-27)
+
+### Performance Improvements
+
+- 优化时间输出格式
+  ([`fab0845`](https://github.com/zsrl/tdxtrader/commit/fab0845c1b1556eab41f42d02d721f33cdc82034))
+
+
 ## v0.1.4 (2024-11-26)
 
 ### Bug Fixes
