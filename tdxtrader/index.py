@@ -130,46 +130,50 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
     clear_file_content(file_path)
 
     while True:
-        current_df = read_file(file_path)
-        if current_df is not None:
-            if previous_df is not None:
-                # 比较前后两次读取的 DataFrame，找出新增的行
-                new_rows = current_df[~current_df.index.isin(previous_df.index)]
-                if not new_rows.empty:
-                    for index, row in new_rows.iterrows():
+        try:
+            current_df = read_file(file_path)
+            if current_df is not None:
+                if previous_df is not None:
+                    # 比较前后两次读取的 DataFrame，找出新增的行
+                    new_rows = current_df[~current_df.index.isin(previous_df.index)]
+                    if not new_rows.empty:
+                        for index, row in new_rows.iterrows():
 
-                        stock_code = add_stock_suffix(row['code'])
+                            stock_code = add_stock_suffix(row['code'])
 
-                        price_type_map = {
-                            '市价': xtconstant.LATEST_PRICE,
-                            '限价': xtconstant.FIX_PRICE
-                        }
-                        
-                        if row['sign'] == buy_sign:
-                            buy_paload = buy_event(row, xt_trader)
-                            xt_trader.order_stock_async(
-                                account=account, 
-                                stock_code=stock_code, 
-                                order_type=xtconstant.STOCK_BUY, 
-                                order_volume=buy_paload.get('size') or 100, 
-                                price_type=price_type_map.get(buy_paload.get('type')) or xtconstant.LATEST_PRICE,
-                                price=buy_paload.get('price') or -1,
-                            )
-                        elif row['sign'] == sell_sign:
-                            position = xt_trader.query_stock_position(account, stock_code)
-                            if position is not None:
-                                sell_paload = sell_event(row, position, xt_trader)
+                            price_type_map = {
+                                '市价': xtconstant.LATEST_PRICE,
+                                '限价': xtconstant.FIX_PRICE
+                            }
+                            
+                            if row['sign'] == buy_sign:
+                                buy_paload = buy_event(row, xt_trader)
                                 xt_trader.order_stock_async(
                                     account=account, 
                                     stock_code=stock_code, 
-                                    order_type=xtconstant.STOCK_SELL, 
-                                    order_volume=sell_paload.get('size') or position.can_use_volume, 
-                                    price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
-                                    price=sell_paload.get('price') or -1,
+                                    order_type=xtconstant.STOCK_BUY, 
+                                    order_volume=buy_paload.get('size') or 100, 
+                                    price_type=price_type_map.get(buy_paload.get('type')) or xtconstant.LATEST_PRICE,
+                                    price=buy_paload.get('price') or -1,
                                 )
-                            else:
-                                print(f"【卖出信号】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
-                    
-            previous_df = current_df
+                            elif row['sign'] == sell_sign:
+                                position = xt_trader.query_stock_position(account, stock_code)
+                                if position is not None:
+                                    sell_paload = sell_event(row, position, xt_trader)
+                                    xt_trader.order_stock_async(
+                                        account=account, 
+                                        stock_code=stock_code, 
+                                        order_type=xtconstant.STOCK_SELL, 
+                                        order_volume=sell_paload.get('size') or position.can_use_volume, 
+                                        price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
+                                        price=sell_paload.get('price') or -1,
+                                    )
+                                else:
+                                    print(f"【卖出信号】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
+                        
+                previous_df = current_df
+
+        except Exception as e:
+            print(f"【发生错误】{e}")
         
         time.sleep(interval)
