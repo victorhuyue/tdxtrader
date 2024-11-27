@@ -126,7 +126,7 @@ def create_trader(account_id, mini_qmt_path):
 
     return xt_trader, account
 
-def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1):
+def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1, cancel_after=None):
 
     xt_trader, account = create_trader(account_id, mini_qmt_path)
 
@@ -178,8 +178,18 @@ def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, 
                                     print(f"【卖出信号】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
                         
                 previous_df = current_df
+            
+            # 撤单
+            if cancel_after is not None:
+                orders = xt_trader.query_stock_orders(account, cancelable_only=True)
+                for order in orders:
+                    if time.time() - order.order_time >= cancel_after:
+                        seq = xt_trader.cancel_order_stock_async(account, order.order_id)
+                        if seq > 0:
+                            print(f"【已撤单】代码: {order.stock_code} 订单号：{order.order_id}")
+                        else:
+                            print(f"【撤单失败】代码: {order.stock_code} 订单号：{order.order_id}")
 
-            orders = xt_trader.query_stock_orders(account, cancelable_only = False)
 
         except Exception as e:
             print(f"【发生错误】{e}")
