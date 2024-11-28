@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.2.0 (2024-11-28)
+
+### Features
+
+- 增加自动撤单功能
+  ([`62602fe`](https://github.com/zsrl/tdxtrader/commit/62602fe5c59a0b9d7c577e312fb339da12ff334e))
+
+### Performance Improvements
+
+- 监听可撤单的委托
+  ([`1c3ae87`](https://github.com/zsrl/tdxtrader/commit/1c3ae874824906fad6a7a353c879d95ca09c7337))
+
+
 ## v0.1.7 (2024-11-27)
 
 
