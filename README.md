@@ -29,6 +29,8 @@ pip install tdxtrader
 
 ## demo
 
+### 基础示例
+
 ```python
 import tdxtrader
 # 参数
@@ -65,6 +67,7 @@ tdxtrader.start(
     sell_sign=sell_sign,
     buy_event=buy_event,
     sell_event=sell_event
+    cancel_after=10 # 10秒未成交则撤单
 )
 ```
 
@@ -90,3 +93,40 @@ def sell_event(stock, position, xt_trader):
     }
 ```
 
+## 详细参数
+
+### account_id
+
+QMT账号ID
+
+### mini_qmt_path
+
+QMT mini路径
+
+### file_path
+
+预警文件路径
+
+### interval
+
+轮询时间(秒)
+
+### buy_sign
+
+买入信号
+
+### sell_sign
+
+卖出信号
+
+### buy_event
+
+买入事件
+
+### sell_event
+
+卖出事件
+
+### cancel_after
+
+未成交撤单时间(秒)
