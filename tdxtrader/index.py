@@ -2,8 +2,11 @@ import time
 from tdxtrader.file import clear_file_content
 from tdxtrader.trader import create_trader
 from tdxtrader.order import create_order, cancel_order
+from tdxtrader.logger import create_logger
 
 def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1, cancel_after=None):
+
+    create_logger()
 
     xt_trader, account = create_trader(account_id, mini_qmt_path)
 

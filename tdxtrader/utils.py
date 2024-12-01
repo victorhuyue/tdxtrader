@@ -1,5 +1,6 @@
 from xtquant import xtconstant
 from datetime import datetime
+from tdxtrader.anis import RED, GREEN, YELLOW, BLUE, RESET
 
 def add_stock_suffix(stock_code):
     """
@@ -32,9 +33,9 @@ def timestamp_to_datetime_string(timestamp):
 
 def parse_order_type(order_type):
     if order_type == xtconstant.STOCK_BUY:
-        return "买入"
+        return f"{RED}买入{RESET}"
     elif order_type == xtconstant.STOCK_SELL:
-        return "卖出"
+        return f"{GREEN}卖出{RESET}"
 
 def convert_to_current_date(timestamp):
     # 将时间戳转换为 datetime 对象
