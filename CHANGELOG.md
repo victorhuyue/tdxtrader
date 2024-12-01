@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.2.1 (2024-12-01)
+
+### Bug Fixes
+
+- 解决非交易日时间戳不对导致撤单判断有问题
+  ([`14ff6ed`](https://github.com/zsrl/tdxtrader/commit/14ff6ed36aee49f73767041ecc8187278cfeeec3))
+
+
 ## v0.2.0 (2024-11-28)
 
 ### Features
