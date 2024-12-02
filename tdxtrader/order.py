@@ -1,12 +1,24 @@
 from xtquant import xtconstant
 import time
 import logging
+import math
 from tdxtrader.file import read_file
 from tdxtrader.utils import add_stock_suffix, timestamp_to_datetime_string, convert_to_current_date
 from tdxtrader.anis import RED, GREEN, YELLOW, BLUE, RESET
+from tdxtrader.logger import logger
+
+def get_volume(paload, row):
+    if paload.get('size') is not None:
+        return paload.get('size')
+    elif paload.get('amount') is not None:
+        if paload.get('price') > 0:
+            return math.floor(paload.get('amount') / paload.get('price') / 100) * 100
+        else:
+            return math.floor(paload.get('amount') / row.get('price') / 100) * 100
+    else:
+        return 100
 
 def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign, buy_event, sell_event):
-    logger = logging.getLogger('log')
     current_df = read_file(file_path)
     if current_df is not None:
         if previous_df is not None:
@@ -28,7 +40,7 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                             account=account, 
                             stock_code=stock_code, 
                             order_type=xtconstant.STOCK_BUY, 
-                            order_volume=buy_paload.get('size') or 100, 
+                            order_volume=get_volume(buy_paload, row), 
                             price_type=price_type_map.get(buy_paload.get('type')) or xtconstant.LATEST_PRICE,
                             price=buy_paload.get('price') or -1,
                         )
@@ -40,12 +52,12 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                                 account=account, 
                                 stock_code=stock_code, 
                                 order_type=xtconstant.STOCK_SELL, 
-                                order_volume=sell_paload.get('size') or position.can_use_volume, 
+                                order_volume=get_volume(sell_paload, row),
                                 price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
                                 price=sell_paload.get('price') or -1,
                             )
                         else:
-                            logger.info(f"【无持仓】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
+                            logger.warning(f"【无持仓】没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
                 
         return current_df
     
@@ -65,4 +77,4 @@ def cancel_order(xt_trader, account, cancel_after):
                 if seq > 0:
                     logger.warning(f"{YELLOW}【已撤单】{RESET}代码: {order.stock_code} 订单编号：{order.order_id} 下单时间: {timestamp_to_datetime_string(order.order_time)} 撤单时间：{timestamp_to_datetime_string(time.time())}")
                 else:
-                    logger.warning(f"【撤单失败】代码: {order.stock_code} 订单号：{order.order_id} 下单时间: {timestamp_to_datetime_string(order.order_time)} 撤单时间：{timestamp_to_datetime_string(time.time())}")
+                    logger.error(f"【撤单失败】代码: {order.stock_code} 订单号：{order.order_id} 下单时间: {timestamp_to_datetime_string(order.order_time)} 撤单时间：{timestamp_to_datetime_string(time.time())}")
