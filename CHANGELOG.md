@@ -1,6 +1,20 @@
 # CHANGELOG
 
 
+## v0.2.2 (2024-12-03)
+
+### Performance Improvements
+
+- 优化测试
+  ([`ffb1f3d`](https://github.com/zsrl/tdxtrader/commit/ffb1f3d66ef7d28de432408a8e3cff4d070c69be))
+
+- 优化输出
+  ([`ca26e4a`](https://github.com/zsrl/tdxtrader/commit/ca26e4a67d2d2d943711e227697492b9ec43240b))
+
+- 增加按金额下单
+  ([`e915b9f`](https://github.com/zsrl/tdxtrader/commit/e915b9fda4873551a61ec3490432794eae5cd470))
+
+
 ## v0.2.1 (2024-12-01)
 
 ### Bug Fixes
@@ -50,11 +64,11 @@
 
 ### Bug Fixes
 
-- 删除描述
-  ([`99e0797`](https://github.com/zsrl/tdxtrader/commit/99e0797f1e3827e5266343df20c5265f78214894))
-
 - 修改
   ([`818e27b`](https://github.com/zsrl/tdxtrader/commit/818e27b1ec45014201503210eeaa7c7b403d4f90))
+
+- 删除描述
+  ([`99e0797`](https://github.com/zsrl/tdxtrader/commit/99e0797f1e3827e5266343df20c5265f78214894))
 
 
 ## v0.1.3 (2024-11-26)
@@ -90,14 +104,14 @@
 
 ### Bug Fixes
 
-- 解决农产品等带空格的股票报错
-  ([`2eaabb6`](https://github.com/zsrl/tdxtrader/commit/2eaabb6338d5031dc9354e8eb18196d315ce9c9f))
+- 删除多余的代码
+  ([`3b901df`](https://github.com/zsrl/tdxtrader/commit/3b901dfeefcc098a1117dd2d4ed24c52025db95f))
 
 - 发布修改
   ([`c5c0009`](https://github.com/zsrl/tdxtrader/commit/c5c0009de9638c61ab5be8ade130c6bd95a29a48))
 
-- 删除多余的代码
-  ([`3b901df`](https://github.com/zsrl/tdxtrader/commit/3b901dfeefcc098a1117dd2d4ed24c52025db95f))
+- 解决农产品等带空格的股票报错
+  ([`2eaabb6`](https://github.com/zsrl/tdxtrader/commit/2eaabb6338d5031dc9354e8eb18196d315ce9c9f))
 
 ### Features
 
