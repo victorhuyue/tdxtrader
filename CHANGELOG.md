@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.1 (2024-12-03)
+
+### Performance Improvements
+
+- 优化文档
+  ([`980177d`](https://github.com/zsrl/tdxtrader/commit/980177d2aa4a411dba9cecd205610b086ad7081c))
+
+
 ## v0.3.0 (2024-12-03)
 
 ### Features
