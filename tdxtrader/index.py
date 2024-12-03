@@ -2,10 +2,12 @@ import time
 from tdxtrader.file import clear_file_content
 from tdxtrader.trader import create_trader
 from tdxtrader.order import create_order, cancel_order
-from tdxtrader.logger import logger
+from tdxtrader.logger import logger, add_wechat_handler
 from tdxtrader.anis import RED, RESET
 
-def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1, cancel_after=None):
+def start(account_id, mini_qmt_path, file_path, buy_sign, sell_sign, buy_event, sell_event, interval=1, cancel_after=None, wechat_webhook_url=None):
+
+    add_wechat_handler(logger, wechat_webhook_url)
 
     xt_trader, account = create_trader(account_id, mini_qmt_path)
 
