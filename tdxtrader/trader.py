@@ -34,10 +34,10 @@ class MyXtQuantTraderCallback(XtQuantTraderCallback):
         logger.info(f"{GREEN}【已成交】{RESET} {parse_order_type(trade.order_type)} 代码:{trade.stock_code} 名称:{trade.order_remark} 成交价格:{trade.traded_price:.2f} 成交数量:{trade.traded_volume} 成交编号:{trade.order_id} 成交时间:{timestamp_to_datetime_string(convert_to_current_date(trade.traded_time))}")
 
     def on_order_error(self, data):
-        logger.error(f"{RED}【委托失败】{RESET}错误信息:{data.error_msg}")
+        logger.error(f"{RED}【委托失败】{RESET}错误信息:{data.error_msgstrip()}")
 
     def on_cancel_error(self, data):
-        logger.error(f"{RED}【撤单失败】{RESET}错误信息:{data.error_msg}")
+        logger.error(f"{RED}【撤单失败】{RESET}错误信息:{data.error_msg.strip()}")
 
 
 def create_trader(account_id, mini_qmt_path):
