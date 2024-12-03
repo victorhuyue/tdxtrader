@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.2 (2024-12-03)
+
+### Bug Fixes
+
+- 图片打码
+  ([`119d23d`](https://github.com/zsrl/tdxtrader/commit/119d23d3c1f8f62273b7148ef1802956a14319a7))
+
+
 ## v0.3.1 (2024-12-03)
 
 ### Performance Improvements
