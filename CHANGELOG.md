@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.3.0 (2024-12-03)
+
+### Features
+
+- 增加企业微信消息推送
+  ([`4b5e3fb`](https://github.com/zsrl/tdxtrader/commit/4b5e3fbec16f7aa75692d7e04f6175c70913a349))
+
+### Performance Improvements
+
+- 优化日志
+  ([`db14fc8`](https://github.com/zsrl/tdxtrader/commit/db14fc8596b9ac3972e0d01c034780e786f36b79))
+
+
 ## v0.2.2 (2024-12-03)
 
 ### Performance Improvements
