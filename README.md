@@ -11,6 +11,10 @@
 
 ![知识星球](./qrcode.png)
 
+## 运行效果
+
+![效果](./output.png)
+
 ## 安装
 
 ```shell
@@ -66,7 +70,7 @@ tdxtrader.start(
     buy_sign=buy_sign,
     sell_sign=sell_sign,
     buy_event=buy_event,
-    sell_event=sell_event
+    sell_event=sell_event,
     cancel_after=10 # 10秒未成交则撤单
 )
 ```
@@ -92,6 +96,27 @@ def sell_event(stock, position, xt_trader):
       'type': '限价' # 市价，限价
     }
 ```
+
+### 按金额买卖
+
+```python
+def buy_event(stock, xt_trader):
+    '''买入数量'''
+    return { 
+      'amount': 100000, 
+      'price': stock.get('price'), # 如果是限价，则设置价格
+      'type': '限价', # 市价，限价
+    }
+
+def sell_event(stock, position, xt_trader):
+    '''卖出数量'''
+    return { 
+      'amount': 100000, # 卖全仓
+      'price': stock.get('price'),  # 如果是限价，则设置价格
+      'type': '限价' # 市价，限价
+    }
+```
+
 
 ## 详细参数
 
