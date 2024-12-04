@@ -26,7 +26,7 @@ def create_logger():
         os.makedirs(log_dir)
 
     # 创建文件处理器，并将日志写入文件
-    file_handler = logging.FileHandler(f'{log_dir}/{date.today().strftime('%Y-%m-%d')}.log', encoding='utf-8')
+    file_handler = logging.FileHandler(f"{log_dir}/{date.today().strftime('%Y-%m-%d')}.log", encoding='utf-8')
     file_handler.setLevel(logging.DEBUG)
     file_handler.setFormatter(formatter)
     file_handler.addFilter(RemoveAnsiEscapeCodes())
