@@ -51,13 +51,13 @@ def create_trader(account_id, mini_qmt_path):
     connect_result = xt_trader.connect()
 
     if connect_result == 0:
-        logger.debug(f'{GREEN}【miniQMT连接成功】{RESET} 路径:{mini_qmt_path}')
+        logger.debug(f"{GREEN}【miniQMT连接成功】{RESET} 路径:{mini_qmt_path}")
 
     # 创建账号对象
     account = StockAccount(account_id)
     # 订阅账号
     xt_trader.subscribe(account)
-    logger.debug(f'{GREEN}【账号订阅成功】{RESET} 账号ID:{account_id}')
+    logger.debug(f"{GREEN}【账号订阅成功】{RESET} 账号ID:{account_id}")
     # 注册回调类
     xt_trader.register_callback(MyXtQuantTraderCallback())
 
