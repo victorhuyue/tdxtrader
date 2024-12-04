@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.4 (2024-12-04)
+
+### Bug Fixes
+
+- 解决语法错误
+  ([`7142fae`](https://github.com/zsrl/tdxtrader/commit/7142fae663de6f735e6642b2806e3ae1d2356feb))
+
+
 ## v0.3.3 (2024-12-04)
 
 ### Bug Fixes
