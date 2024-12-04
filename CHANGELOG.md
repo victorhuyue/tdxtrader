@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.5 (2024-12-04)
+
+### Bug Fixes
+
+- 删除不必要的输出
+  ([`94be2f6`](https://github.com/zsrl/tdxtrader/commit/94be2f6fa349f3d183a5745d4c199277a2985b4e))
+
+
 ## v0.3.4 (2024-12-04)
 
 ### Bug Fixes
