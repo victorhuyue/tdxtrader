@@ -117,6 +117,30 @@ def sell_event(stock, position, xt_trader):
     }
 ```
 
+### 企业微信通知
+
+利用企业微信机器人发送通知
+
+设置群机器人参看：https://open.work.weixin.qq.com/help2/pc/14931
+
+```python
+tdxtrader.start(
+    account_id=account_id,
+    mini_qmt_path=mini_qmt_path,
+    file_path=file_path,
+    interval=interval,
+    buy_sign=buy_sign,
+    sell_sign=sell_sign,
+    buy_event=buy_event,
+    sell_event=sell_event,
+    cancel_after=10, # 10秒未成交则撤单,
+    wechat_webhook_url='你的webhook_url' # 企业微信机器人webhook url
+)
+```
+
+![微信机器人](./wxbot.png)
+
+![消息示例](./msg.png)
 
 ## 详细参数
 
@@ -155,3 +179,7 @@ QMT mini路径
 ### cancel_after
 
 未成交撤单时间(秒)
+
+### wechat_webhook_url
+
+企业微信机器人webhook url
