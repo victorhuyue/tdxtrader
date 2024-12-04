@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.3 (2024-12-04)
+
+### Bug Fixes
+
+- 处理南京港报错
+  ([`c6a536f`](https://github.com/zsrl/tdxtrader/commit/c6a536f3e1455de7aef932fa2e240dd7fc232686))
+
+
 ## v0.3.2 (2024-12-03)
 
 ### Bug Fixes
