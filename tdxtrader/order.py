@@ -6,6 +6,7 @@ from tdxtrader.file import read_file
 from tdxtrader.utils import add_stock_suffix, timestamp_to_datetime_string, convert_to_current_date
 from tdxtrader.anis import RED, GREEN, YELLOW, BLUE, RESET
 from tdxtrader.logger import logger
+from tdxtrader.trader import error_orders
 
 def get_volume(paload, row):
     if paload.get('size') is not None:
@@ -36,28 +37,30 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                     
                     if row['sign'] == buy_sign:
                         buy_paload = buy_event(row, xt_trader)
-                        xt_trader.order_stock_async(
-                            account=account, 
-                            stock_code=stock_code, 
-                            order_type=xtconstant.STOCK_BUY, 
-                            order_volume=get_volume(buy_paload, row), 
-                            price_type=price_type_map.get(buy_paload.get('type')) or xtconstant.LATEST_PRICE,
-                            price=buy_paload.get('price') or -1,
-                            order_remark=row.get('name')
-                        )
+                        if buy_paload is not None:
+                            xt_trader.order_stock_async(
+                                account=account, 
+                                stock_code=stock_code, 
+                                order_type=xtconstant.STOCK_BUY, 
+                                order_volume=get_volume(buy_paload, row), 
+                                price_type=price_type_map.get(buy_paload.get('type')) or xtconstant.LATEST_PRICE,
+                                price=buy_paload.get('price') or -1,
+                                order_remark=row.get('name')
+                            )
                     elif row['sign'] == sell_sign:
                         position = xt_trader.query_stock_position(account, stock_code)
                         if position is not None:
                             sell_paload = sell_event(row, position, xt_trader)
-                            xt_trader.order_stock_async(
-                                account=account, 
-                                stock_code=stock_code, 
-                                order_type=xtconstant.STOCK_SELL, 
-                                order_volume=get_volume(sell_paload, row),
-                                price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
-                                price=sell_paload.get('price') or -1,
-                                order_remark=row.get('name')
-                            )
+                            if sell_paload is not None:
+                                xt_trader.order_stock_async(
+                                    account=account, 
+                                    stock_code=stock_code, 
+                                    order_type=xtconstant.STOCK_SELL, 
+                                    order_volume=get_volume(sell_paload, row),
+                                    price_type=price_type_map.get(sell_paload.get('type')) or xtconstant.LATEST_PRICE,
+                                    price=sell_paload.get('price') or -1,
+                                    order_remark=row.get('name')
+                                )
                         else:
                             logger.warning(f"{YELLOW}【无持仓】{RESET}没有查询到持仓信息，不执行卖出操作。股票代码：{stock_code}, 名称：{row['name']}")
                 
@@ -69,12 +72,8 @@ def cancel_order(xt_trader, account, cancel_after):
     if cancel_after is not None:
         orders = xt_trader.query_stock_orders(account, cancelable_only=True)
         for order in orders:
+            if order.order_id in error_orders:
+                return
             order_time = convert_to_current_date(order.order_time)
-            # print(order_time, time.time())
-            # print(timestamp_to_datetime_string(order_time), timestamp_to_datetime_string(time.time()))
             if time.time() - order_time >= cancel_after:
                 xt_trader.cancel_order_stock_async(account, order.order_id)
-                # if seq > 0:
-                #     logger.warning(f"{YELLOW}【已撤单】{RESET}代码: {order.stock_code} 订单编号：{order.order_id} 下单时间: {timestamp_to_datetime_string(order.order_time)} 撤单时间：{timestamp_to_datetime_string(time.time())}")
-                # else:
-                #     logger.error(f"【撤单失败】代码: {order.stock_code} 订单号：{order.order_id} 下单时间: {timestamp_to_datetime_string(order.order_time)} 撤单时间：{timestamp_to_datetime_string(time.time())}")
