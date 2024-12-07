@@ -6,6 +6,8 @@ from tdxtrader.utils import timestamp_to_datetime_string, parse_order_type, conv
 from tdxtrader.anis import RED, GREEN, YELLOW, BLUE, RESET
 from tdxtrader.logger import logger
 
+error_orders = []
+
 class MyXtQuantTraderCallback(XtQuantTraderCallback):
     def on_disconnected(self):
         """
@@ -34,9 +36,15 @@ class MyXtQuantTraderCallback(XtQuantTraderCallback):
         logger.info(f"{GREEN}【已成交】{RESET} {parse_order_type(trade.order_type)} 代码:{trade.stock_code} 名称:{trade.order_remark} 成交价格:{trade.traded_price:.2f} 成交数量:{trade.traded_volume} 成交编号:{trade.order_id} 成交时间:{timestamp_to_datetime_string(convert_to_current_date(trade.traded_time))}")
 
     def on_order_error(self, data):
-        logger.error(f"{RED}【委托失败】{RESET}错误信息:{data.error_msgstrip()}")
+        if data.order_id in error_orders:
+            return
+        error_orders.append(data.order_id)
+        logger.error(f"{RED}【委托失败】{RESET}错误信息:{data.error_msg.strip()}")
 
     def on_cancel_error(self, data):
+        if data.order_id in error_orders:
+            return
+        error_orders.append(data.order_id)
         logger.error(f"{RED}【撤单失败】{RESET}错误信息:{data.error_msg.strip()}")
 
 
