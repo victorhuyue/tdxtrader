@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.3.6 (2024-12-07)
+
+### Bug Fixes
+
+- 修复委托失败报错
+  ([`504d0f9`](https://github.com/zsrl/tdxtrader/commit/504d0f926a200e369f662653938ff2df1793b64e))
+
+### Performance Improvements
+
+- 1. 日志报错只打印一次。2. 当买入或卖出时间返回None时不下单
+  ([`ce18f4b`](https://github.com/zsrl/tdxtrader/commit/ce18f4b7797681affdaa6592ad11072c22a9c477))
+
+
 ## v0.3.5 (2024-12-04)
 
 ### Bug Fixes
