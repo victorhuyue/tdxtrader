@@ -34,9 +34,11 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                         '市价': xtconstant.LATEST_PRICE,
                         '限价': xtconstant.FIX_PRICE
                     }
+
+                    position = xt_trader.query_stock_position(account, stock_code)
                     
                     if row['sign'] == buy_sign:
-                        buy_paload = buy_event(row, xt_trader)
+                        buy_paload = buy_event(row, position, xt_trader)
                         if buy_paload is not None:
                             xt_trader.order_stock_async(
                                 account=account, 
@@ -48,7 +50,6 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                                 order_remark=row.get('name')
                             )
                     elif row['sign'] == sell_sign:
-                        position = xt_trader.query_stock_position(account, stock_code)
                         if position is not None:
                             sell_paload = sell_event(row, position, xt_trader)
                             if sell_paload is not None:
