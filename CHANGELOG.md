@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.7 (2024-12-08)
+
+### Performance Improvements
+
+- 买入事件增加持仓参数
+  ([`4388927`](https://github.com/zsrl/tdxtrader/commit/4388927e9878e59320d7f385d080245a9c6e8d4b))
+
+
 ## v0.3.6 (2024-12-07)
 
 ### Bug Fixes
