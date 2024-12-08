@@ -45,7 +45,7 @@ interval = 1 # 轮询时间(秒)
 buy_sign = 'KDJ买入条件选股' # 买入信号
 sell_sign = 'KDJ卖出条件选股' # 卖出信号
 
-def buy_event(stock, xt_trader):
+def buy_event(stock, position, xt_trader):
     '''买入数量'''
     return { 
       'size': 200, 
@@ -80,7 +80,7 @@ tdxtrader.start(
 stock对象中包含了当前股票的详细信息，可以通过price属性获取预警时的价格
 
 ```python
-def buy_event(stock, xt_trader):
+def buy_event(stock, position, xt_trader):
     '''买入数量'''
     return { 
       'size': 200, 
@@ -100,13 +100,36 @@ def sell_event(stock, position, xt_trader):
 ### 按金额买卖
 
 ```python
-def buy_event(stock, xt_trader):
+def buy_event(stock, position, xt_trader):
     '''买入数量'''
     return { 
       'amount': 100000, 
       'price': stock.get('price'), # 如果是限价，则设置价格
       'type': '限价', # 市价，限价
     }
+
+def sell_event(stock, position, xt_trader):
+    '''卖出数量'''
+    return { 
+      'amount': 100000, # 卖全仓
+      'price': stock.get('price'),  # 如果是限价，则设置价格
+      'type': '限价' # 市价，限价
+    }
+```
+
+### 使用当前持仓判断是否买入
+
+```python
+def buy_event(stock, position, xt_trader):
+    '''买入数量'''
+    if position is None:
+        return { 
+        'amount': 100000, 
+        'price': stock.get('price'), # 如果是限价，则设置价格
+        'type': '限价', # 市价，限价
+        }
+    else:
+        return None
 
 def sell_event(stock, position, xt_trader):
     '''卖出数量'''
