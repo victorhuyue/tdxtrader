@@ -18,6 +18,13 @@ def get_volume(paload, row):
             return math.floor(paload.get('amount') / row.get('price') / 100) * 100
     else:
         return 100
+    
+
+def get_position(positions, stock_code):
+    for position in (positions or []):
+        if position.stock_code == stock_code:
+            return position
+    return None
 
 def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign, buy_event, sell_event):
     current_df = read_file(file_path)
@@ -35,7 +42,9 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                         '限价': xtconstant.FIX_PRICE
                     }
 
-                    position = xt_trader.query_stock_position(account, stock_code)
+                    positions = xt_trader.query_stock_positions(account)
+
+                    position = get_position(positions, stock_code)
                     
                     if row['sign'] == buy_sign:
                         buy_paload = buy_event(row, position, xt_trader)
