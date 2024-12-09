@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.8 (2024-12-09)
+
+### Bug Fixes
+
+- Qmt查询单持仓的api对etf有bug，已改为查询全部持仓
+  ([`3d777b0`](https://github.com/zsrl/tdxtrader/commit/3d777b06e663d1fa5f91264b6da405900921e3d1))
+
+
 ## v0.3.7 (2024-12-08)
 
 ### Performance Improvements
