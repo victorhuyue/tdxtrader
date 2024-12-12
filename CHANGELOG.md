@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.3.10 (2024-12-12)
+
+### Bug Fixes
+
+- 修改文件编码为gbk
+  ([`f603429`](https://github.com/zsrl/tdxtrader/commit/f60342951b5f37e89b8ad13c0b8da26ad505c1d0))
+
+
 ## v0.3.9 (2024-12-12)
 
 ### Bug Fixes
