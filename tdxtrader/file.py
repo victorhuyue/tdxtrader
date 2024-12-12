@@ -26,12 +26,12 @@ def read_file(file_path):
     
     try:
         # 检查文件是否为空
-        with open(file_path, 'r', encoding='gb2312') as file:
+        with open(file_path, 'r', encoding='gbk') as file:
             first_line = file.readline()
             if not first_line:  # 文件为空
                 return pd.DataFrame(columns=COLUMNS)
         
-        df = pd.read_csv(file_path, sep=r'\s+', encoding='gb2312', on_bad_lines=handle_bad_lines, engine='python', dtype={0: str})
+        df = pd.read_csv(file_path, sep=r'\s+', encoding='gbk', on_bad_lines=handle_bad_lines, engine='python', dtype={0: str})
         df.columns = COLUMNS
         return df
     except Exception as e:
@@ -40,7 +40,7 @@ def read_file(file_path):
 
 def clear_file_content(file_path):
     try:
-        with open(file_path, 'w', encoding='gb2312') as file:
+        with open(file_path, 'w', encoding='gbk') as file:
             file.truncate(0)
             # 写入表头
             header = ' '.join(COLUMNS) + '\n'
