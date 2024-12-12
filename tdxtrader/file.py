@@ -16,7 +16,6 @@ def handle_bad_lines(bad_line):
     
     # 检查修复后的行是否符合预期格式
     fields = fixed_line.split()
-    print(fields)
     if len(fields) == 8:
         return fields
     else:
