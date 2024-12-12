@@ -1,6 +1,17 @@
 # CHANGELOG
 
 
+## v0.3.9 (2024-12-12)
+
+### Bug Fixes
+
+- 删除print
+  ([`fb47cdc`](https://github.com/zsrl/tdxtrader/commit/fb47cdc576cb47d6e7a80065354246f1134ec0e0))
+
+- 启动时增加预置表头，解决预警文件首行报错的问题
+  ([`f86efcc`](https://github.com/zsrl/tdxtrader/commit/f86efcc41b400b3f44ec1dff880288b7b72ed269))
+
+
 ## v0.3.8 (2024-12-09)
 
 ### Bug Fixes
