@@ -1,7 +1,7 @@
 from xtquant import xtconstant
 import time
-import logging
 import math
+import inspect
 from tdxtrader.file import read_file
 from tdxtrader.utils import add_stock_suffix, timestamp_to_datetime_string, convert_to_current_date
 from tdxtrader.anis import RED, GREEN, YELLOW, BLUE, RESET
@@ -45,9 +45,19 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                     positions = xt_trader.query_stock_positions(account)
 
                     position = get_position(positions, stock_code)
+
+                    params = {
+                        'xt_trader': xt_trader,
+                        'account': account,
+                        'stock': row,
+                        'position': position
+                    }
                     
                     if row['sign'] == buy_sign:
-                        buy_paload = buy_event(row, position, xt_trader)
+                        if len(inspect.signature(buy_event).parameters) > 1: # 检查 buy_event 是否需要额外的参数
+                            buy_paload = buy_event(row, position, xt_trader)
+                        else:
+                            buy_paload = buy_event(params)
                         if buy_paload is not None:
                             xt_trader.order_stock_async(
                                 account=account, 
@@ -60,7 +70,11 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                             )
                     elif row['sign'] == sell_sign:
                         if position is not None:
-                            sell_paload = sell_event(row, position, xt_trader)
+                            if len(inspect.signature(sell_event).parameters) > 1: # 检查 sell_event 是否需要额外的参数
+                                sell_paload = sell_event(row, position, xt_trader)
+                            else:
+                                sell_paload = sell_event(params)
+                                
                             if sell_paload is not None:
                                 xt_trader.order_stock_async(
                                     account=account, 

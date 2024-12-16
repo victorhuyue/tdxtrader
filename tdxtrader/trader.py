@@ -60,6 +60,8 @@ def create_trader(account_id, mini_qmt_path):
 
     if connect_result == 0:
         logger.debug(f"{GREEN}【miniQMT连接成功】{RESET} 路径:{mini_qmt_path}")
+    else:
+        logger.error(f"{RED}【miniQMT连接失败】{RESET} 请检查")
 
     # 创建账号对象
     account = StockAccount(account_id)

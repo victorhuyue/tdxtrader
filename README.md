@@ -45,20 +45,24 @@ interval = 1 # 轮询时间(秒)
 buy_sign = 'KDJ买入条件选股' # 买入信号
 sell_sign = 'KDJ卖出条件选股' # 卖出信号
 
-def buy_event(stock, position, xt_trader):
-    '''买入数量'''
+def buy_event(params):
+    '''买入事件'''
+
     return { 
-      'size': 200, 
-      'price': -1, # 如果是限价，则设置价格
-      'type': '市价', # 市价，限价
+        'size': 200, 
+        'price': -1, # 如果是限价，则设置价格
+        'type': '市价', # 市价，限价
     }
 
-def sell_event(stock, position, xt_trader):
-    '''卖出数量'''
+def sell_event(params):
+    '''卖出事件'''
+
+    position = params.get('position')
+    
     return { 
-      'size': position.can_use_volume, # 卖全仓
-      'price': -1,  # 如果是限价，则设置价格
-      'type': '市价' # 市价，限价
+        'size': position.can_use_volume, # 卖全仓
+        'price': -1,  # 如果是限价，则设置价格
+        'type': '市价' # 市价，限价
     }
 
 
@@ -80,64 +84,104 @@ tdxtrader.start(
 stock对象中包含了当前股票的详细信息，可以通过price属性获取预警时的价格
 
 ```python
-def buy_event(stock, position, xt_trader):
-    '''买入数量'''
+def buy_event(params):
+    '''买入事件'''
+
+    stock = params.get('stock')
+
     return { 
-      'size': 200, 
-      'price': stock.get('price'), # 如果是限价，则设置价格
-      'type': '限价', # 市价，限价
+        'size': 200, 
+        'price': stock.get('price'), # 如果是限价，则设置价格
+        'type': '限价', # 市价，限价
     }
 
-def sell_event(stock, position, xt_trader):
-    '''卖出数量'''
+def sell_event(params):
+    '''卖出事件'''
+
+    stock = params.get('stock')
+    position = params.get('position')
+
     return { 
-      'size': position.can_use_volume, # 卖全仓
-      'price': stock.get('price'),  # 如果是限价，则设置价格
-      'type': '限价' # 市价，限价
+        'size': position.can_use_volume, # 卖全仓
+        'price': stock.get('price'),  # 如果是限价，则设置价格
+        'type': '限价' # 市价，限价
     }
 ```
 
 ### 按金额买卖
 
 ```python
-def buy_event(stock, position, xt_trader):
-    '''买入数量'''
+def buy_event(params):
+    '''买入事件'''
     return { 
-      'amount': 100000, 
-      'price': stock.get('price'), # 如果是限价，则设置价格
-      'type': '限价', # 市价，限价
+        'amount': 100000, 
+        'price': stock.get('price'), # 如果是限价，则设置价格
+        'type': '限价', # 市价，限价
     }
 
-def sell_event(stock, position, xt_trader):
-    '''卖出数量'''
+def sell_event(params):
+    '''卖出事件'''
+
+    stock = params.get('stock')
+
     return { 
-      'amount': 100000, # 卖全仓
-      'price': stock.get('price'),  # 如果是限价，则设置价格
-      'type': '限价' # 市价，限价
+        'amount': 100000, # 卖全仓
+        'price': stock.get('price'),  # 如果是限价，则设置价格
+        'type': '限价' # 市价，限价
     }
 ```
 
 ### 使用当前持仓判断是否买入
 
 ```python
-def buy_event(stock, position, xt_trader):
+def buy_event(params):
     '''买入数量'''
+
+    stock = params.get('stock')
+    position = params.get('position')
+
     if position is None:
         return { 
-        'amount': 100000, 
-        'price': stock.get('price'), # 如果是限价，则设置价格
-        'type': '限价', # 市价，限价
+            'amount': 100000, 
+            'price': stock.get('price'), # 如果是限价，则设置价格
+            'type': '限价', # 市价，限价
         }
     else:
         return None
 
-def sell_event(stock, position, xt_trader):
+def sell_event(params):
     '''卖出数量'''
+
+    stock = params.get('stock')
+
     return { 
-      'amount': 100000, # 卖全仓
-      'price': stock.get('price'),  # 如果是限价，则设置价格
-      'type': '限价' # 市价，限价
+        'amount': 100000, # 卖全仓
+        'price': stock.get('price'),  # 如果是限价，则设置价格
+        'type': '限价' # 市价，限价
     }
+```
+
+### 按资金比例买入（卖出逻辑一致）
+
+```python
+def buy_event(params):
+    '''买入数量'''
+
+    stock = params.get('stock')
+    position = params.get('position')
+    xt_trader = params.get('xt_trader')
+    account = params.get('account')
+
+    asset = xt_trader.query_stock_asset(account)
+
+    if position is None:
+        return { 
+            'amount': asset.total_asset * 0.01, 
+            'price': stock.get('price'), # 如果是限价，则设置价格
+            'type': '限价', # 市价，限价
+        }
+    else:
+        return None
 ```
 
 ### 企业微信通知
