@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.4.0 (2024-12-16)
+
+### Features
+
+- 更改文件读取逻辑，从源头解决错误行的问题
+  ([`64da527`](https://github.com/zsrl/tdxtrader/commit/64da527d006a7d6dcbd4b50d0596a3337649cd0e))
+
+### Performance Improvements
+
+- 优化买入卖出事件入参
+  ([`ed681d1`](https://github.com/zsrl/tdxtrader/commit/ed681d103e0d6e034a85432e1bc8d823d5feffed))
+
+
 ## v0.3.10 (2024-12-12)
 
 ### Bug Fixes
