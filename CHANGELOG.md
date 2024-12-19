@@ -1,6 +1,19 @@
 # CHANGELOG
 
 
+## v0.4.2 (2024-12-19)
+
+### Bug Fixes
+
+- 修改a为ａ
+  ([`85aac2d`](https://github.com/zsrl/tdxtrader/commit/85aac2d5b8964cf5cc0fde9417a6884803149872))
+
+### Performance Improvements
+
+- 测试文档站
+  ([`71d483a`](https://github.com/zsrl/tdxtrader/commit/71d483af308da97641e746280dca947f3898154d))
+
+
 ## v0.4.1 (2024-12-17)
 
 ### Performance Improvements
