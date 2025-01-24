@@ -41,31 +41,40 @@ def process_line(line):
 
 def read_file(file_path):
     """
-    读取文件并处理错误。
+    读取文件并处理错误，支持多种编码格式。
     """
-    try:
-        # 检查文件是否为空
-        with open(file_path, 'r', encoding='gbk') as file:
-            first_line = file.readline()
-            if not first_line:  # 文件为空
-                return pd.DataFrame(columns=COLUMNS)
-
-        # 逐行读取文件并处理
-        rows = []
-        with open(file_path, 'r', encoding='gbk') as file:
-            for line in file:
-                processed_line = process_line(line)  # 处理每一行
-                if processed_line:  # 如果处理成功
-                    rows.append(processed_line)
-
-        # 构建 DataFrame
-        df = pd.DataFrame(rows, columns=COLUMNS)
-        return df
-
-    except Exception as e:
-        logger.error(f"读取文件时发生错误: {e}")
-        return None
+    encodings = ['gbk', 'gb2312', 'utf-8']
     
+    for encoding in encodings:
+        try:
+            # 检查文件是否为空
+            with open(file_path, 'r', encoding=encoding, errors='ignore') as file:
+                first_line = file.readline()
+                if not first_line:  # 文件为空
+                    return pd.DataFrame(columns=COLUMNS)
+
+            # 逐行读取文件并处理
+            rows = []
+            with open(file_path, 'r', encoding=encoding, errors='ignore') as file:
+                for line in file:
+                    processed_line = process_line(line)  # 处理每一行
+                    if processed_line:  # 如果处理成功
+                        rows.append(processed_line)
+
+            # 构建 DataFrame
+            df = pd.DataFrame(rows, columns=COLUMNS)
+            logger.debug(f"使用 {encoding} 编码成功读取文件")
+            return df
+
+        except UnicodeError:
+            continue
+        except Exception as e:
+            logger.error(f"读取文件时发生错误: {e}")
+            continue
+    
+    logger.error("所有编码尝试均失败")
+    return None
+
 def clear_file_content(file_path):
     try:
         with open(file_path, 'w', encoding='gbk') as file:
