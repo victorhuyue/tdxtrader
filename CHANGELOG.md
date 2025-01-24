@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.4.3 (2025-01-24)
+
+### Bug Fixes
+
+- 解决读取文件编码错误
+  ([`bdf8baf`](https://github.com/zsrl/tdxtrader/commit/bdf8baf15f93d8fc6e33556020d3f3d1c16361c9))
+
+
 ## v0.4.2 (2024-12-19)
 
 ### Bug Fixes
