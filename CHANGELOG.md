@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.4.5 (2025-02-08)
+
+### Bug Fixes
+
+- 修改文档错误
+  ([`a288e6b`](https://github.com/zsrl/tdxtrader/commit/a288e6b2aa714cf1d80de34d4de37adcda18ba5e))
+
+
 ## v0.4.4 (2025-02-08)
 
 ### Performance Improvements
