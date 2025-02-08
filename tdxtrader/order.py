@@ -53,7 +53,11 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                         'position': position
                     }
                     
-                    if row['sign'] == buy_sign:
+                    # Convert buy_sign and sell_sign to lists if they are strings
+                    buy_signs = buy_sign if isinstance(buy_sign, list) else [buy_sign]
+                    sell_signs = sell_sign if isinstance(sell_sign, list) else [sell_sign]
+                    
+                    if row['sign'] in buy_signs:
                         if len(inspect.signature(buy_event).parameters) > 1: # 检查 buy_event 是否需要额外的参数
                             buy_paload = buy_event(row, position, xt_trader)
                         else:
@@ -68,7 +72,7 @@ def create_order(xt_trader, account, file_path, previous_df, buy_sign, sell_sign
                                 price=buy_paload.get('price') or -1,
                                 order_remark=row.get('name')
                             )
-                    elif row['sign'] == sell_sign:
+                    elif row['sign'] in sell_signs:
                         if position is not None:
                             if len(inspect.signature(sell_event).parameters) > 1: # 检查 sell_event 是否需要额外的参数
                                 sell_paload = sell_event(row, position, xt_trader)
