@@ -1,6 +1,14 @@
 # CHANGELOG
 
 
+## v0.4.4 (2025-02-08)
+
+### Performance Improvements
+
+- 买入卖出信号支持多个
+  ([`d0cefc2`](https://github.com/zsrl/tdxtrader/commit/d0cefc2e80d5e098ff8a330fe293ee63f89358d9))
+
+
 ## v0.4.3 (2025-01-24)
 
 ### Bug Fixes
